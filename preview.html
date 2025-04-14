@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Preview</title>
+</head>
+<body>
+    <div id="contact-preview"></div>
+    <button id="download-vcard">Add to Contacts</button>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const vcardData = decodeURIComponent(params.get('data'));
+
+        // Display preview
+        document.getElementById('contact-preview').textContent = vcardData;
+
+        // Download as .vcf file
+        document.getElementById('download-vcard').addEventListener('click', () => {
+            const blob = new Blob([vcardData], { type: 'text/vcard' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'contact.vcf';
+            a.click();
+        });
+    </script>
+</body>
+</html>
